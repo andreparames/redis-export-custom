@@ -18,15 +18,20 @@ You should add ~/.local/bin/ to your PATH.
 Quick Start
 -----------
 
-redis-export PATTERN OUTPUT_FILE
-redis-import INPUT_FILE
+.. code-block:: bash
+
+   redis-export PATTERN OUTPUT_FILE
+   redis-import INPUT_FILE
 
 For example,
 
 .. code-block:: bash
 
    redis-export 'phonebook:' ~/d/t1.json
+   # redis-export 'phonebook:*:name:*' ~/d/t1.json
    redis-export ~/d/t1.json
+
+For more usage help, run the command with --help option.
 
 Documentation
 -------------
