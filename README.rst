@@ -39,7 +39,18 @@ Documentation
 redis-export will export keys with given pattern to a json file (keys and
 values both base64 encoded).
 
-redis-import will import keys to redis.
+redis-import will import those keys and values back to redis.
+
+Implementation Detail
+-------------------------
+
+- SCAN is used to iterate over keys with given pattern.
+- DUMP is used to dump the key.
+- RESTORE is used to restore a key. force-replace param is set to TRUE.
+
+Exported file is a json list, each list item is of form (key, dump_value).
+The redis key and dump value is encoded in base64 in order to fit in regular
+json.
 
 ChangeLog
 ---------
