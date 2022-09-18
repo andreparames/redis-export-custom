@@ -70,7 +70,7 @@ def create_shared_parser():
 
     """
     parser = argparse.ArgumentParser(
-        description='phonebook db export, import tool')
+        description='redis db selective export and import tool')
     parser.add_argument('--host', default='localhost', help='redis host')
     parser.add_argument('-p', '--port', default=6379, help='redis port')
     parser.add_argument('-n', '--num', help='redis database number')
