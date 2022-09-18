@@ -35,8 +35,9 @@ def get_redis(args):
 
 
 def export_db(args):
-    if '*' not in args.pattern:
-        pattern = args.pattern + '*'
+    pattern = args.pattern
+    if '*' not in pattern:
+        pattern = pattern + '*'
     logger.info("export keys with pattern %s...", pattern)
     result = []
     red = get_redis(args)
