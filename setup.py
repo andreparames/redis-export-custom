@@ -5,9 +5,6 @@
 
 """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals, with_statement)
-
 from setuptools import setup, find_packages
 
 
@@ -36,7 +33,7 @@ setup(
     name="redis-export",
     version=get_version_from_init_file(),
     packages=find_packages(exclude=("utils",)),
-    install_requires=requirements_file_to_list(),
+    install_requires=['redis'],
     entry_points={
         'console_scripts': [
             'redis-export = redisexport.main:redis_export',
@@ -50,7 +47,7 @@ setup(
     author_email="sylecn@gmail.com",
     maintainer="Yuanle Song",
     maintainer_email="sylecn@gmail.com",
-    description="export redis keys with a pattern",
+    description="Export redis keys with a prefix or matching a pattern, import from exported file",
     long_description=open('README.rst').read(),
     long_description_content_type='text/x-rst',
     license="GPLv3+",

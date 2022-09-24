@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
 # coding=utf-8
+#
+# Copyright (C) 2022  Yuanle Song <sylecn@gmail.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 """Export redis keys with a given prefix.
 
@@ -11,6 +27,8 @@ import codecs
 import json
 
 import redis
+
+from redisexport import __version__
 
 
 logger = logging.getLogger(__name__)
@@ -71,7 +89,8 @@ def create_shared_parser():
 
     """
     parser = argparse.ArgumentParser(
-        description='redis db selective export and import tool')
+        description='redis db selective export and import tool'
+                    ' v%s' % (__version__, ))
     parser.add_argument('--host', default='localhost', help='redis host')
     parser.add_argument('-p', '--port', default=6379, help='redis port')
     parser.add_argument('-n', '--num', help='redis database number')
