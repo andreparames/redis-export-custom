@@ -33,7 +33,7 @@ For example,
    # redis-export 'phonebook:*:name:*' ~/d/t1.json
    redis-import --host redis.example.com ~/d/t1.json
 
-For more usage help, run the command with --help option.
+For more usage help, run the command with ``--help`` option.
 
 Documentation
 -------------
