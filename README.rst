@@ -11,7 +11,7 @@ To install redis-export, simply:
 
 .. code-block:: bash
 
-   $ pip install redis-export
+   $ python3 -m pip install redis-export
 
 You should add ~/.local/bin/ to your PATH.
 
@@ -69,7 +69,7 @@ You may clone it via ssh or https protocol
 License
 ----------
 
-Copyright (C) 2022 Yuanle Song <sylecn@gmail.com>
+Copyright (C) 2022, 2023 Yuanle Song <sylecn@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -86,6 +86,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ChangeLog
 ---------
+
+* v0.3.0 2023-03-13
+
+  - support auth related options. Use the same options as redis-cli.
+  - add source code URL in README.rst
 
 * v0.2.0 2022-09-24
 

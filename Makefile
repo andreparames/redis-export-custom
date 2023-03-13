@@ -1,4 +1,7 @@
 default: build upload
+check:
+	pycodestyle redisexport/
+	pylint redisexport/
 clean:
 	rm -rf dist/*
 build: clean
@@ -7,4 +10,4 @@ test-upload:
 	python3 -m twine upload --repository testpypi dist/*
 upload:
 	python3 -m twine upload dist/*
-.PHONY: default clean build upload
+.PHONY: default check clean build test-upload upload

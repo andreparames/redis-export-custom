@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 #
-# Copyright (C) 2022  Yuanle Song <sylecn@gmail.com>
+# Copyright (C) 2022, 2023  Yuanle Song <sylecn@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ import argparse
 import logging
 import codecs
 import json
+import os
+from getpass import getpass
 
 import redis
 
@@ -34,14 +36,14 @@ from redisexport import __version__
 logger = logging.getLogger(__name__)
 
 
-def tob64(bs):
+def tob64(bs):    # pylint: disable=invalid-name
     """encode bytes to base64 string.
 
     """
     return codecs.decode(codecs.encode(bs, 'base64'))
 
 
-def fromb64(s):
+def fromb64(s):    # pylint: disable=invalid-name
     """decode base64 string to bytes.
 
     """
@@ -49,7 +51,19 @@ def fromb64(s):
 
 
 def get_redis(args):
-    return redis.Redis(host=args.host, port=args.port, db=args.num)
+    if args.uri:
+        return redis.Redis.from_url(args.uri)
+
+    if args.askpass:
+        password = getpass()
+    elif args.password:
+        password = args.password
+    elif os.getenv('REDISCLI_AUTH'):
+        password = os.getenv('REDISCLI_AUTH')
+    else:
+        password = None
+    return redis.Redis(host=args.host, port=args.port, db=args.num,
+                       password=password)
 
 
 def export_db(args):
@@ -94,6 +108,16 @@ def create_shared_parser():
     parser.add_argument('--host', default='localhost', help='redis host')
     parser.add_argument('-p', '--port', default=6379, help='redis port')
     parser.add_argument('-n', '--num', help='redis database number')
+    parser.add_argument('-a', '--pass', dest='password',
+                        help='''Password to use when connecting to the server.
+                        You can also use the REDISCLI_AUTH environment
+                        variable to pass this password more safely
+                        (if both are used, this argument takes precedence).''')
+    parser.add_argument('--askpass', action='store_true',
+                        help='''Force user to input password with mask from '
+                        STDIN. If this argument is used, '-a' and REDISCLI_AUTH
+                        environment variable will be ignored.''')
+    parser.add_argument('-u', metavar='URI', dest='uri', help='Server URI.')
     return parser
 
 
