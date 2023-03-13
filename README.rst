@@ -54,6 +54,18 @@ Exported file is a json list, each list item is of form (key, dump_value).
 The redis key and dump value is encoded in base64 in order to fit in regular
 json.
 
+Source Code
+------------
+
+Source code is hosted at https://gitlab.emacsos.com/sylecn/redis-export
+
+You may clone it via ssh or https protocol
+
+.. code-block:: bash
+
+   git clone git@gitlab.emacsos.com:sylecn/redis-export.git
+   git clone https://gitlab.emacsos.com/sylecn/redis-export.git
+
 License
 ----------
 
