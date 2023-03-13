@@ -1,4 +1,4 @@
-default: build upload
+default: check
 check:
 	pycodestyle redisexport/
 	pylint redisexport/

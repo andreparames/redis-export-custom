@@ -64,6 +64,7 @@ You may clone it via ssh or https protocol
 .. code-block:: bash
 
    git clone git@gitlab.emacsos.com:sylecn/redis-export.git
+   # or
    git clone https://gitlab.emacsos.com/sylecn/redis-export.git
 
 License
@@ -87,7 +88,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ChangeLog
 ---------
 
-* v0.3.0 2023-03-13
+* v0.3.1 2023-03-13
 
   - support auth related options. Use the same options as redis-cli.
   - add source code URL in README.rst
