@@ -24,9 +24,11 @@
 import argparse
 import logging
 import codecs
+import pickle
 import json
 import os
 from getpass import getpass
+from ast import literal_eval
 
 import redis
 
@@ -77,11 +79,19 @@ def export_db(args):
     while True:
         cur, key_list = red.scan(cur, match=pattern)
         for key in key_list:
-            result.append((tob64(key), tob64(red.dump(key))))
+            ktype = red.type(key)
+            if ktype == b"string":
+                result.append((key.decode("utf-8"), str(pickle.loads(red.get(key)).encode("utf-8"))))
+            elif ktype == b"hash":
+                out = {}
+                for subk, subv in red.hgetall(key).items():
+                    out[subk] = pickle.loads(subv)
+                result.append((key.decode("utf-8"), str(out)))
         if cur == 0:
             break
     # Note: can't use 'wb' in json.dump()
     with open(args.output_filename, 'w', encoding='utf-8') as fo:
+        print(result)
         json.dump(result, fo, ensure_ascii=True, indent=0)
     logger.info("dumped %s keys", len(result))
 
@@ -93,7 +103,14 @@ def import_db(args):
     red = get_redis(args)
     pipe = red.pipeline()
     for key, value in result:
-        pipe.restore(fromb64(key), 0, fromb64(value), replace=True)
+        value = literal_eval(value)
+        if isinstance(value, dict):
+            for subk, subv in value.items():
+                pipe.hset(key, subk, pickle.dumps(subv))
+        else:
+            if isinstance(value, bytes):
+                value = value.decode("utf-8")
+            pipe.set(key, pickle.dumps(value))
     pipe.execute()
     logger.info("restored %s keys", len(result))
 
